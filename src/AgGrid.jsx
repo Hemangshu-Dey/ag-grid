@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
-import "./AgGrid.css";
 
-// Registering the required modules
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-// Table component
 const AgGrid = () => {
-  // Setting up the row data nd column data for the table
-  // RowData
-  const [rowData, setRowData] = useState([
+  const [rowData] = useState([
     {
       name: "Aarav Sharma",
       age: 29,
@@ -90,13 +85,13 @@ const AgGrid = () => {
     },
   ]);
 
-  // ColumnDefs
   const [columnDefs] = useState([
     { field: "name", headerName: "NAME" },
     { field: "age", headerName: "AGE" },
     { field: "email", headerName: "EMAIL" },
     {
       headerName: "PHONE",
+      headerClass: "bg-black text-white border-r border-gray-300",
       children: [
         { field: "phone.personal", headerName: "PERSONAL" },
         { field: "phone.official", headerName: "OFFICIAL" },
@@ -105,10 +100,9 @@ const AgGrid = () => {
     { field: "role", headerName: "ROLE" },
     { field: "gender", headerName: "GENDER" },
   ]);
-
   return (
     <div
-      className="ag-theme-alpine table"
+      className="ag-theme-alpine table bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden"
       style={{ height: "300px", width: "100%" }}
     >
       <AgGridReact
@@ -118,6 +112,12 @@ const AgGrid = () => {
           sortable: true,
           filter: true,
           flex: 1,
+          cellClass: "border-r border-gray-300",
+          headerClass: "bg-black text-white border-r border-gray-300",
+        }}
+        rowClassRules={{
+          "bg-gray-100": "node.rowIndex % 2 === 0",
+          "bg-white": "node.rowIndex % 2 !== 0",
         }}
       />
     </div>
